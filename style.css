@@ -1,0 +1,94 @@
+:root {
+    --dark_teal: #075A64;
+    --teal: #69BFAB;
+    --golden: #D4AA3A;
+}
+
+.nav-button {
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+.centre {
+    background-color: #89C0C6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.slanted-box1 {
+    position: relative;
+    padding: 3% 10%;
+    align-content: center;
+    overflow: hidden;
+    margin: 0;
+    font-family: sans-serif, "Roboto Light";
+    color: white;
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -40%;
+        width: 200%;
+        height: 100%;
+        z-index: -1;
+        margin: 0;
+        transform: perspective(250px) rotateY(3deg) scaleY(0.8) skewX(3deg);
+
+        background: var(--dark_teal);
+    }
+}
+
+.slanted-box2 {
+    position: relative;
+    padding: 3% 10%;
+    align-content: center;
+    overflow: hidden;
+    margin: 0;
+    font-family: sans-serif, "Roboto Light";
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -40%;
+        width: 200%;
+        height: 100%;
+        z-index: -1;
+        margin: 0;
+        transform: perspective(250px) rotateY(-3deg) scaleY(0.8) skewX(-3deg);
+
+        background: #9e1f5f;
+    }
+}
+.btn {
+    background-color: var(--teal); /* Blue background */
+    border: none; /* Remove borders */
+    color: white; /* White text */
+    padding: 8px 8px; /* Some padding */
+    font-size: 16px; /* Set a font size */
+    cursor: pointer; /* Mouse pointer on hover */
+    display: inline-block;
+    transition: background-color 0.5s;
+}
+
+/* Darker background on mouse-over */
+.btn:hover {
+    background-color: var(--dark_teal);
+}
+
+.header_with_links {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+body,html {
+    margin:0;
+    padding:0;
+}
