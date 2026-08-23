@@ -3,7 +3,14 @@
     --teal: #69BFAB;
     --golden: #D4AA3A;
 }
-
+h1 {
+    padding: 0 25%;
+    font-family: 'Press Start 2P', 'system-ui';
+    color: var(--teal);
+    font-size: 48px;
+    -webkit-text-stroke: 1px var(--dark_teal);
+    line-height: 56px
+}
 .nav-button {
     border: none;
     color: white;
@@ -25,11 +32,11 @@
 
 .slanted-box1 {
     position: relative;
-    padding: 3% 10%;
+    padding: 5% 25%;
     align-content: center;
     overflow: hidden;
     margin: 0;
-    font-family: sans-serif, "Roboto Light";
+    font-family: 'Press Start 2P', 'system-ui';
     color: white;
     &::before {
         content: "";
@@ -42,17 +49,17 @@
         margin: 0;
         transform: perspective(250px) rotateY(3deg) scaleY(0.8) skewX(3deg);
 
-        background: var(--dark_teal);
+        background: var(--teal);
     }
 }
 
 .slanted-box2 {
     position: relative;
-    padding: 3% 10%;
+    padding: 5% 25%;
     align-content: center;
     overflow: hidden;
     margin: 0;
-    font-family: sans-serif, "Roboto Light";
+    font-family: 'Press Start 2P', 'system-ui';
     &::before {
         content: "";
         position: absolute;
@@ -68,14 +75,15 @@
     }
 }
 .btn {
-    background-color: var(--teal); /* Blue background */
+    background-color: #DDBEA8; /* Blue background */
     border: none; /* Remove borders */
     color: white; /* White text */
-    padding: 8px 8px; /* Some padding */
+    padding: 6px 6px; /* Some padding */
     font-size: 16px; /* Set a font size */
     cursor: pointer; /* Mouse pointer on hover */
     display: inline-block;
-    transition: background-color 0.5s;
+    transition: background-color 0.2s;
+    border-radius: 12px;
 }
 
 /* Darker background on mouse-over */
@@ -84,9 +92,10 @@
 }
 
 .header_with_links {
-    display: flex;
+    display: block;
     justify-content: space-between;
     align-items: baseline;
+    overflow: hidden;
 }
 body,html {
     margin:0;
