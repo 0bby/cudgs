@@ -103,3 +103,9 @@ body,html {
     margin:0;
     padding:0;
 }
+
+.event_div:after { content: "\00A0"; display: block; clear: both; visibility: hidden; line-height: 0; height: 0;}
+.event_div{ display: inline-block;}
+html[xmlns] .event_div { display: block;}
+* html .event_div{ height: 1%;}
+.event_div {display: block}

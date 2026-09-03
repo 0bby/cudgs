@@ -23,19 +23,30 @@ fetch(url, {
         console.log(data);
         const wrapper = document.getElementById("timeline");
         const scrollable = document.createElement("div");
+        scrollable.className = "scrollable";
         scrollable.style.overflowX = 'auto';
         scrollable.style.overflowY = 'hidden';
         scrollable.style.gap = '1%';
         scrollable.style.display = "flex";
         scrollable.style.flexDirection = "row";
+        const css = document.styleSheets[0];
         const results = data.results;
         const now = new Date();
+        let idx = 0;
         results.forEach(result => {
             const result_date = new Date(result["Date"]);
             if ((result_date.getTime() + 8 * HOUR) <= now.getTime())
                 return;
             const event_div = document.createElement("div");
-            event_div.innerHTML = result['Event Name'];
+            event_div.innerHTML = `
+              <span style="flex: 1 1 auto; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                ${result['Event Name']}
+              </span>
+              <span style="white-space: nowrap; margin-left: 4px;">
+                <i class="fa-solid fa-location-dot" style="vertical-align: middle; position: relative; top: -3px;"></i> 
+                ${result['Location']}
+              </span>
+            `;
             const img = document.createElement("img");
             if (result['Image URL'] == null || result['Image URL'].length === 0)
                 img.src = "Carousel Image Backup.jpg";
@@ -46,10 +57,42 @@ fetch(url, {
             img.style.height = "100%";
             img.loading = "eager";
             event_div.appendChild(img);
-            event_div.style.fontSize = "20px";
+            event_div.style.display= "flex";
+            event_div.flexDirection = "row";
+            event_div.style.flexWrap = "wrap";
+            event_div.style.justifyContent = "space-between";
+            event_div.style.alignItems="center";
             event_div.style.flex = "0 0 33%";
             event_div.style.width = "100px";
+            event_div.style.position = "relative";
+            event_div.id = "event" + `${idx}`;
+            event_div.className = "event_div";
             scrollable.appendChild(event_div);
+            const event_description = document.createElement("div");
+            event_description.id = "event_des" + `${idx}`;
+            event_description.innerHTML = result['Description'];
+            event_div.appendChild(event_description);
+            const rule1 = `#event_des${idx} {
+                position: absolute;
+                top: calc(${event_div.style.fontSize} + 1%);
+                font-size: calc(${event_div.style.fontSize} * 0.75);
+                left: 50%;
+                width: 50%
+                max-height: 100%;
+                background: rgba(29, 106, 154, 0.72);
+                display: inline-block;
+                color: #fff;
+                visibility: hidden;
+                opacity: 0;
+                transition: opacity .2s, visibility .2s;
+                }`
+            const rule2 = `#event${idx}:hover #event_des${idx} {
+                  visibility: visible;
+                  opacity: 0.8;
+                }`
+            css.insertRule(rule1, css.cssRules.length);
+            css.insertRule(rule2, css.cssRules.length);
+            idx++;
         })
         scrollable.style.scrollbarWidth = "none";
         scrollable.style.scrollbehavior = "smooth";
@@ -65,6 +108,7 @@ fetch(url, {
         leftBtn.style.top = '55%';
         leftBtn.style.zIndex = "2";
         leftBtn.style.opacity = "0.45";
+        leftBtn.style.padding = "0";
         leftBtn.onclick = () => {scrollable.scrollBy({left: -(scrollable.clientWidth * 0.33), behavior:"smooth"})};
         const RightBtn = document.createElement("button");
         const iconR = document.createElement("i");
@@ -83,6 +127,7 @@ fetch(url, {
         wrapper.appendChild(leftBtn);
         wrapper.appendChild(RightBtn);
         wrapper.appendChild(scrollable);
+        console.log(css);
         console.log(results);
     })
     .catch(error => console.error("Error:", error))
