@@ -23,10 +23,12 @@ fetch(url, {
         console.log(data);
         const wrapper = document.getElementById("timeline");
         const scrollable = document.createElement("div");
+        scrollable.style.padding = "2.5%";
+        scrollable.style.fontSize = "12px";
         scrollable.className = "scrollable";
         scrollable.style.overflowX = 'auto';
         scrollable.style.overflowY = 'hidden';
-        scrollable.style.gap = '1%';
+        scrollable.style.gap = '2%';
         scrollable.style.display = "flex";
         scrollable.style.flexDirection = "row";
         const css = document.styleSheets[0];
@@ -42,7 +44,7 @@ fetch(url, {
               <span style="flex: 1 1 auto; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                 ${result['Event Name']}
               </span>
-              <span style="white-space: nowrap; margin-left: 4px;">
+              <span style="white-space: nowrap; background-color: gray; border-radius: 5px; padding: 2px; margin: 2px">
                 <i class="fa-solid fa-location-dot" style="vertical-align: middle; position: relative; top: -3px;"></i> 
                 ${result['Location']}
               </span>
@@ -52,26 +54,44 @@ fetch(url, {
                 img.src = "Carousel Image Backup.jpg";
             else
                 img.src = result['Image URL'];
+            const img_wrapper = document.createElement("div");
             img.style.objectFit = "cover";
             img.style.width = "100%";
             img.style.height = "100%";
             img.loading = "eager";
-            event_div.appendChild(img);
+            img_wrapper.append(img);
+            img_wrapper.style.position= "relative";
+            const event_description = document.createElement("div");
+            event_description.id = "event_des" + `${idx}`;
+            event_description.innerHTML = result['Description'];
+            img_wrapper.appendChild(event_description);
+            img_wrapper.id = "event" + `${idx}`;
+            event_div.appendChild(img_wrapper);
             event_div.style.display= "flex";
             event_div.flexDirection = "row";
             event_div.style.flexWrap = "wrap";
             event_div.style.justifyContent = "space-between";
             event_div.style.alignItems="center";
-            event_div.style.flex = "0 0 33%";
+            event_div.style.flex = "0 0 40%";
             event_div.style.width = "100px";
             event_div.style.position = "relative";
-            event_div.id = "event" + `${idx}`;
             event_div.className = "event_div";
+            const date_time = document.createElement("div");
+            const date = new Date(result['Date']);
+            const date_str = date.toLocaleDateString("en-GB");
+            const time_str = date.toLocaleTimeString();
+            date_time.className = "event_div";
+            date_time.innerHTML = `
+              <span style="flex: 1 1 auto; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                ${date_str}
+              </span>
+              <span style="white-space: nowrap; background-color: gray; border-radius: 5px; padding: 2px; margin: 2px">
+                <i class="fa-solid fa-location-dot" style="vertical-align: middle; position: relative; top: -2px;"></i> 
+                ${time_str}
+              </span>`
+            event_div.appendChild(date_time);
             scrollable.appendChild(event_div);
-            const event_description = document.createElement("div");
-            event_description.id = "event_des" + `${idx}`;
-            event_description.innerHTML = result['Description'];
-            event_div.appendChild(event_description);
+
             const rule1 = `#event_des${idx} {
                 position: absolute;
                 top: calc(${event_div.style.fontSize} + 1%);
@@ -94,13 +114,15 @@ fetch(url, {
             css.insertRule(rule2, css.cssRules.length);
             idx++;
         })
-        scrollable.style.scrollbarWidth = "none";
+        scrollable.style.scrollbarGutter = "none";
+        scrollable.style.scrollbarColor = "#000077 #bada55";
         scrollable.style.scrollbehavior = "smooth";
         const leftBtn = document.createElement("button");
         const iconL = document.createElement("i");
         iconL.className = "fa-solid fa-chevron-left";
         leftBtn.appendChild(iconL);
         leftBtn.style.fontSize = "30px";
+        leftBtn.style.borderRadius = "50%";
         leftBtn.style.width = "40px";
         leftBtn.style.height = "40px";
         leftBtn.style.position = "absolute";
@@ -114,6 +136,7 @@ fetch(url, {
         const iconR = document.createElement("i");
         iconR.className = "fa-solid fa-chevron-right";
         RightBtn.appendChild(iconR);
+        RightBtn.style.borderRadius = "50%";
         RightBtn.style.padding = "0";
         RightBtn.style.fontSize = "30px";
         RightBtn.style.width = "40px";
